@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Krug der Karten</title>
+    <style>
+      /* Add your CSS styles here */
+      body {
+        font-family: Arial, sans-serif;
+        background-image: url('./tcg-background.jpg');
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #333;
+        padding: 20px;
+      }
+
+      header h1 {
+        margin: 0;
+        text-align: center;
+      }
+
+      main {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+      }
+
+      .card-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .card {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 8px #ccc;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        width: 30%;
+      }
+
+      .card img {
+        width: 100%;
+      }
+
+      .card h2 {
+        margin: 10px 0;
+      }
+
+      .card p {
+        margin: 0;
+        text-align: center;
+      }
+
+      .card button {
+        background-color: #333;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        padding: 10px 20px;
+      }
+
+      .cart {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+      }
+
+      .cart h2 {
+        margin: 0;
+      }
+
+      .cart ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .cart li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Krug der Karten</h1>
+    </header>
+    <main>
+      <ul class="card-list">
+        <li class="card">
+          <img src="https://via.placeholder.com/200x300" alt="Card Image">
+          <h2>Card Name</h2>
+          <p>$10</p>
+          <button class="add-to-cart" data-name="Card Name" data-price="10">Add to Cart</button>
+        </li>
+        <li class="card">
+          <img src="https://via.placeholder.com/200x300" alt="Card Image">
+          <h2
+<h2>Card Name 2</h2>
+<p>$10</p>
+<button class="add-to-cart" data-name="Card Name 2" data-price="10">Add to Cart</button>
+</li>
+<li class="card">
+  <img src="https://via.placeholder.com/200x300" alt="Card Image">
+  <h2>Card Name 3</h2>
+  <p>$10</p>
+  <button class="add-to-cart" data-name="Card Name 3" data-price="10">Add to Cart</button>
+</li>
+</ul>
+</main>
+<div class="cart">
+  <h2>Cart</h2>
+  <ul class="cart-list"></ul>
+</div>
+
+<script>
+  // Add your JavaScript code here
+  const addToCartButtons = document.querySelectorAll('.add-to-cart');
+  const cartList = document.querySelector('.cart-list');
+  let cart = [];
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      let name = e.target.dataset.name;
+      let price = e.target.dataset.price;
+
+      addToCart(name, price);
+    });
+  });
+
+  function addToCart(name, price) {
+    let item = { name, price };
+    cart.push(item);
+    renderCart();
+  }
+
+  function renderCart() {
+    cartList.innerHTML = '';
+
+    cart.forEach(item => {
+      let li = document.createElement('li');
+      li.innerHTML = `
+        ${item.name} - $${item.price}
+        <button class="remove-from-cart" data-index="${cart.indexOf(item)}">Remove</button>
+      `;
+      cartList.appendChild(li);
+    });
+  }
+
+  cartList.addEventListener('click', e => {
+    if (e.target.classList.contains('remove-from-cart')) {
+      let index = e.target.dataset.index;
+      removeFromCart(index);
+    }
+  });
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+  }
+</script>
+</body>
+</html>
